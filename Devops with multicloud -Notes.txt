@@ -4,6 +4,10 @@ kalynatompe4@gmail.com
 Netcracker#456
 keys MFA :- 914533
 
+
+gitlab 
+https://gitlab.com/dashboard/projects ##kaltompe123/Netcracker#456
+
 ##pluralsightt 
 kaltompe1223
 Netcracker 
@@ -26,6 +30,7 @@ Globally
 
 2 regions in india (Mumbai,hyderbad)
 33+ edge location in india 
+
 
 Edge location :- To reduce latency for accessing application 
 TTL time to leave (for example 2days)  #Cloud Front service (💕😁👍🙌
@@ -681,3 +686,519 @@ git merge dev   ### merge will push all ids.
 git checkout main 
 git cherry-pick <commit-id>   ##will push specific id 
 ########################################################
+3rd of july 
+git stash
+git fetch
+git pull = fetch + merge
+overview of all git classes
+###################################################################
+4th July Gitlab
+
+99.99 same only diffeerence is Instead of PR (pull request) in gitlab MR (Merge Request).
+Rest everything is same.8.15am
+
+##Teraform:-
+Intro ,Opnesource earlier aquired by IBM :- 
+opensource opentofu
+terraform init 
+terraform plan 
+terraform apply 
+
+use "-auto-approve" ##to proceed with autoapproval approval 
+##########################################################
+7th July 
+Terraform introduction 
+provider.tf, main.tf
+license
+#########################################################
+8th july
+Important config files in terraform. 
+main.tf ---> Main config resource provision file.
+provider.tf --> Details of provider like aws/azure. Required provider version for ex. version = "6.11.0"
+variable.tf -->>variable defined here .Main.tf takes variable details from variable.tf here.
+terraform.tfvars -->> values provided here as argument. Easy to edit & understand . variable.tf takes details from terraform.tfvars if not explicitlty mentioned in main.tf.
+Note: Value mentioned in terraform.tfvars overwrites values in variable.tf . Values in file terraform.tfvars has more precedence over variable.tf...##Note:-if values hardcoded at main.tf has more precedence.
+##Below flow 
+terraform.tfvars(update values at variable.tf)------> variable.tf(updates values at main.tf)-------> main.tf 
+instance_type = "t2.nano" ---> variable "instance_type" -->variable "instance_type" ---> instance_type = var.instance_type   
+
+output.tf --> To get output for specific values. For example to get private ip id specific instance.
+syntax
+
+#main.tf syntax 
+resource "aws_instance" "VM1" {
+  instance_type = var.instance_type
+  ami = var.ami_id
+}
+
+#variable.tf syntax
+variable "ami_id" {
+type = string
+default = ""
+}
+
+#terraform.tfvars syntax 
+ami_id  = "ami-00ca32bbc84273381"
+instance_type = "t2.micro"
+
+#output.tf syntax
+output "ip" {
+value = aws_instance.VM1.public_ip
+}
+############
+Different tfvars files. 
+Bydefualt is terraform.tfvars
+if any other files (for ex. test.tfvars) need to provide syntax as below 
+
+terraform plan -var-file="test.tfvars"
+terraform plan -var="instance_type=t2.nano"
+
+###############################################################################################
+9th July 
+state file:- 
+
+fop changing instance.type it will reboot instance  . for example 
+
+teraform + aws behaviour 
+| **Attribute**                            | **In-place Update (No Recreate)**               | **Forces Recreation (Destroy + Create New)**                  |
+| ---------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------- |
+| `tags`                                   | ✅ Can update tags anytime                       | —                                                             |
+| `user_data`                              | ✅ Updates metadata (may need reboot)            | —                                                             |
+| `volume_tags`                            | ✅ In-place                                      | —                                                             |
+| `disable_api_termination`                | ✅ In-place                                      | —                                                             |
+| `monitoring`                             | ✅ Enable/disable detailed monitoring            | —                                                             |
+| `ebs_optimized`                          | ✅ Sometimes in-place (depends on instance type) | —                                                             |
+| `iam_instance_profile`                   | ✅ Attach/detach in-place                        | —                                                             |
+| `credit_specification`                   | ✅ Update burstable credit option                | —                                                             |
+| `ami`                                    | —                                               | ❌ Requires new instance                                       |
+| `instance_type`                          | —                                               | ❌ Must recreate with new type                                 |
+| `subnet_id`                              | —                                               | ❌ Moving to another subnet requires new instance              |
+| `availability_zone`                      | —                                               | ❌ Must recreate in new AZ                                     |
+| `key_name`                               | —                                               | ❌ New SSH key pair requires replacement                       |
+| `placement_group`                        | —                                               | ❌ Changing placement group requires recreation                |
+| `tenancy`                                | —                                               | ❌ Changing tenancy (default ↔ dedicated) requires recreation  |
+| `host_id`                                | —                                               | ❌ Bound to dedicated host → must recreate                     |
+| `root_block_device` / `ebs_block_device` | ⚠️ Some changes (tags, size) may be in-place    | ❌ Some changes (volume type, encryption) can force recreation |
+
+############################################################################
+10th july 
+##backend.tf s3:- 
+common statefile over s3.
+
+terraform {
+#required_version = ">=1.10" # this will allow to work same terraform version only 
+  backend "s3" {
+    bucket = "nareshitveeradevops"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+    use_lockfile = true #supports latest version >=1.10
+    #dynamodb_table = "kalyan"
+    #encrypt = true
+  }
+}
+
+& create dynamobd with partion key "LockID" & table kalyan
+################################################################################
+##11th July 
+Coding custom network 
+& nat gateway
+###############################################################################
+14th of July
+RDS through terraform 
+###############################################################################
+15th july 
+date source rds 
+8.30am
+
+#terraform fmt ##format 
+Check git repo
+################################################################################
+July 16th 
+modules -basics
+module {
+source = <source path /any git/local/official terraform registry>
+##rest all regular functanility 
+}
+###############################################################################
+July 17th 
+root-child module
+              ┌──────────────────────┐
+              │      Root Module     │
+              │  (main.tf, vars.tf)  │
+              └─────────┬────────────┘
+                        │
+                        │ calls module with "source"
+                        │ passes variables (input)
+                        ▼
+              ┌──────────────────────┐
+              │     Child Module     │
+              │ (rds/main.tf, etc.)  │
+              └─────────┬────────────┘
+                        │
+                defines resources
+              (aws_db_instance, etc.)
+                        │
+                        ▼
+              ┌──────────────────────┐
+              │    AWS Resources     │
+              │ (RDS, VPC, Subnets)  │
+              └──────────────────────┘
+			  
+			  
+                   ┌───────────────────────────┐
+                   │        Root Module        │
+                   │ (main.tf, variables.tf)   │
+                   └─────────────┬─────────────┘
+                                 │
+         ┌───────────────────────┼────────────────────────┐
+         │                       │                        │
+         ▼                       ▼                        ▼
+ ┌─────────────────┐     ┌─────────────────┐      ┌─────────────────┐
+ │  Child Module    │     │  Child Module    │      │  Child Module    │
+ │      VPC         │     │      EC2         │      │      RDS         │
+ │ (modules/vpc/)   │     │ (modules/ec2/)   │      │ (modules/rds/)   │
+ └─────────┬────────┘     └─────────┬────────┘      └─────────┬────────┘
+           │                        │                         │
+           ▼                        ▼                         ▼
+ ┌─────────────────┐     ┌─────────────────┐      ┌─────────────────────────┐
+ │ AWS VPC          │     │ AWS EC2         │      │ AWS RDS + Subnet Group  │
+ │ Subnets, IGW,    │     │ Instances, SGs  │      │ MySQL/PGSQL instance,   │
+ │ Route Tables etc │     │ Key pairs       │      │ Subnets, Security Group │
+ └─────────────────┘     └─────────────────┘      └─────────────────────────┘
+
+life cycle rules
+lifecycle {
+  ignore_changes = [ tags, ]
+  #create_before_destroy = true 
+  #prevent_destroy = true 
+}
+
+##################################################################################################################
+##July 18
+multiple sg rules same CIDR & diff CIDR.
+for loop 
+fop_each for dynamic rules 
+userdata
+workspace
+#######################################################################################################
+21st July 
+count & for_each
+#     tags = {
+#       Name = "dev-${count.index}"
+#     }
+
+for each
+variable "env" {
+  type = list(string)
+  default = ["dev" , "prod"]
+}
+for_each = toset(var.env)
+    #count =length(var.env)   if it is count 
+    tags = {
+      Name = each.value
+    }
+
+
+import
+#terraform import aws_instance.name i-099d74c66547e88
+
+target resource 
+# terraform plan --target=aws_instance.name
+
+root/child (test-dev-prod env)
+###################################################################
+July 22
+
+provisoners are not tracked by terraform hence we use null resources for it .
+
+file local remote 
+ 
+ null resource #
+#Solution-2 to Re-Run the Provisioner
+#Use terraform taint to manually mark the resource for recreation:
+# terraform taint aws_instance.server     #terraform taint & untaint
+# terraform apply
+
+#terraform taint 
+#However — ⚠️ it’s now deprecated and replaced by the terraform apply -replace syntax.
+
+################################################################
+23rd july 
+8am
+terrgrunt 
+opentofu 
+condition 
+project
+git clone https://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@github.com/CloudTechDevOps/2nd10WeeksofCloudOps-main.git
+git clone https://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@github.com/CloudTechDevOps/fullstack-authors-books-application.git
+git clone https://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@github.com/CloudTechDevOps/fullstack-employee-application.gitgit clone https://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@github.com/CloudTechDevOps/3-tier-app-infra.git
+############################################################################################################################################################### 
+########################################################################################################################################### 
+24th July
+project using terraform
+Other projects pending 
+#############################
+25th july 
+Jenkin introduction & basics ,
+installation (sample executation ) 
+
+default port 8080 . 
+default path /var/lib/jenkins/workspace
+both can be customised 
+#####################################################################################
+26th class (jenkins - day2)
+
+
+
+#dynanic calling apply/destoy 
+#GUI :-This project is parameterized -->>choice parameter 
+
+caling from SCM (source code manager)
+mean calling source code from git
+
+---------------------------------------------
+pipeline {
+    agent any
+
+environment {
+    TF_DIR = "day-2"
+}
+    parameters {
+        choice(
+            name: 'ACTION',
+            choices: ['apply', 'destroy'],
+            description: 'Select Terraform action for final stage'
+        )
+    }
+
+    stages {
+
+       # stage('checkout') {
+       #    steps {
+       #         git branch: 'main', url: 'https://github.com/kaltompe123/TerraformMyRepo.git'
+       #    }
+       # }   ##this is not required as we are calling from git jenkin file from git itself.
+
+        stage('init') {
+            steps {
+                dir("${env.TF_DIR}") {
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('plan') {
+            steps {
+                dir("${env.TF_DIR}") {
+                    sh 'terraform plan'
+                }
+            }
+        }
+
+        stage('apply/destroy') {
+            steps {
+                dir("${env.TF_DIR}") {
+                    sh "terraform ${ACTION} -auto-approve"
+                }
+            }
+        }
+    }
+}
+---------------------------------------------------------------------------
+Scripted pipeline example. 
+Only Difference from regular pipeline## stages,steps,environment,steps are not required . node instead pipeline 
+
+node {
+      stage('Preparation') { 
+  }
+    stage('Build') {
+     }
+    stage('Results') {
+}
+}
+
+for example.
+
+node {
+   
+    env.TF_DIR = "day-2"   
+
+    stage('checkout') { // for display purposes
+      git branch: 'main', url: 'https://github.com/kaltompe123/TerraformMyRepo.git'  
+    }
+    
+    stage('init') {
+      dir("${env.TF_DIR}") {
+        sh 'terraform init'
+    }
+}
+ 
+    stage('plan') {
+       dir("${env.TF_DIR}") {
+        sh 'terraform plan'
+    }       
+    }
+  
+     stage('apply/destory ') {
+       dir("${env.TF_DIR}") {
+        sh 'terraform  ${ACTION} -auto-approve'
+    }       
+    }   
+ 
+    
+}
+----------------------------------------------------------------------------
+Difference between regular (declarative) & scripted pipeline
+| Feature                | Declarative (Regular) | Scripted               |
+| ---------------------- | --------------------- | ---------------------- |
+| Ease of use            | ⭐⭐⭐⭐⭐                 | ⭐⭐⭐                    |
+| Flexibility            | ⭐⭐⭐                   | ⭐⭐⭐⭐⭐                  |
+| Syntax                 | Structured            | Groovy code            |
+| Validation             | Strong                | Very little            |
+| Good for CI/CD         | Yes                   | Yes, but complex cases |
+| Good for dynamic logic | No                    | Yes                    |
+
+
+##############################################################################################
+28 july 
+
+Jenkin triggers 
+1> Build after other projects are built
+2> Build periodically
+3> GitHub hook trigger for GITScm polling
+4>Poll SCM
+
+3>>GitHub hook trigger for GITScm polling::-
+GitHub Webhook Settings
+In GitHub → Repo Settings → Webhooks:
+
+Payload URL:
+http://<jenkins>/github-webhook/
+
+Content type:
+application/json
+
+Events:
+Select “Just the push event” (or more if required)
+http://100.26.47.241:8080/github-webhook/
+
+4>>Poll SCM
+combination of "Build after other projects are built" + "GitHub hook trigger for GITScm polling"
+
+
+##############################################
+29th july 
+user management
+jenkins master/slave
+##############################
+30th july
+maven goals
+############## life cycles ###################
+clean ------project will be cleaned unnessary files 
+validate - validate the project is correct and all necessary information is available or not
+compile - compile the source code of the project (which converst .java to .class in target foolder)
+test - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
+package - take the compiled code and package it in its distributable format, such as a JAR.
+install - install the package into the local repository(.m2) jar will fill generate into target folder 
+deploy - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.
+
+each process start from scratch for ex- if we start with test directly it will perform clean,validate,compile in sequence first 
+practice pending
+#########################################################
+31st ##tomcat
+practice pending #practice Done
+
+project 
+git@github.com:kaltompe123/project-1-maven-jenkins-CICD-docker-eks-.git
+#######################################################################################
+1st Aug
+Sonarqube #check notepad doc "sonarqube_finaldocV10900"
+rules,quality gates ##make default  
+quality gates #(overall code ) 
+*jenkin action pending ###
+gitlab session pending 
+#######################################################################################
+2nd of Aug 
+Resume prepartion 
+########################################################################################################################
+Practice for gitlab cicd
+IMPORTANT NOTE:_
+  AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"       # Hardcoded Access Key
+  AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"  # Hardcoded Secret Key
+
+🔥 Why It Fails
+
+In GitLab:
+
+CI/CD variables are automatically injected into the job environment.
+
+You do NOT need to re-declare them in .gitlab-ci.yml.
+
+By redefining them like this, you're overriding them with empty values.
+##Always mention them gitlabCI variables
+--------------------------------------------------------------------
+##for private TOMCAT_SSH_KEY ##variable should be saved as File in Gitlab CI variable 
+Also it should be directly copied from ec2-user or where ever generating it. else it may consider it as normal file not PEM file (PEM RSA private key)
+
+you can test it with $ ls -l "$TOMCAT_SSH_KEY" or with file command 
+
+$ file "$TOMCAT_SSH_KEY"
+/builds/kaltompe123/project-1-maven-jenkins-CICD-docker-eks-gitlab.tmp/TOMCAT_SSH_KEY: PEM RSA private key
+
+it should be "PEM RSA private key"
+
+$ ls -l "$TOMCAT_SSH_KEY"
+-r-------- 1 root root 3242 Feb 23 12:11 /builds/kaltompe123/project-1-maven-jenkins-CICD-docker-eks-gitlab.tmp/TOMCAT_SSH_KEY
+
+Also  should be mentioned in qualitygate.wait=true to get wait result for sonarqube analysis 
+#mvn sonar:sonar -Dsonar.projectKey=project-1 -Dsonar.host.url=http://100.26.110.104:9000 -Dsonar.login=778b47f8d1b5c40b62e2363f59ac3d614780c223 qualitygate.wait=true
+
+
+
+                   .github/workflows/main.yml
+
+| Feature                | GitHub                      | GitLab                |
+| ---------------------- | --------------------------- | --------------------- |
+| CI/CD                  | GitHub Actions              | Built-in              |
+| Container Registry     | Available                   | Built-in              |
+| Security Scanning      | Add-ons                     | Built-in (SAST, DAST) |
+| Kubernetes Integration | Good                        | Very strong           |
+| Issue Tracking         | Good                        | Advanced              |
+| Self-hosted option     | Limited (GitHub Enterprise) | Strong                |
+| yml path               | .github/workflows/main.yml  | .gitlab-ci.yml        |
+#############################################################################################################################
+4th Aug 
+###DOCKER##
+Containerization light weight form virtulization that allow you to package & run application in isolated environment called container.
+
+
+these container are controlled by kubernates/openshift .
+if these containers controlled by kubernates ,these container called as POD in term of kubernates.
+Else its simple container .
+
+base image downloaded from docker hub .
+depencies & code can be deployed using docker file (similar like userdata in aws concept)  >> called docker image (similar like custom AMI )
+
+In Containerization only harwdware is shared . Os are isolated.
+
+
+##############################################################################################################################
+5th Aug 
+practice
+
+inprogress
+docker images
+docker pull 
+docker inspect <imagename>
+docker run <image>
+-it ==itereactive terminal & -dt detached terminal
+
+docker exec -it <container id> <command>
+docker exec -it <container id > /bin/bash 
+
+##############################################################################################################################
+6th of Aug 
+Docker command ,
+docker port -p & -P ## port binding localhost:dockercontainer
+ngnix installation 
+Docker file 
