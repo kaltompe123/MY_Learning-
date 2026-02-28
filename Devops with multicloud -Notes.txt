@@ -1202,3 +1202,4 @@ Docker command ,
 docker port -p & -P ## port binding localhost:dockercontainer
 ngnix installation 
 Docker file 
+##################################
