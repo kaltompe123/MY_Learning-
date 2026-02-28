@@ -1185,16 +1185,26 @@ In Containerization only harwdware is shared . Os are isolated.
 ##############################################################################################################################
 5th Aug 
 practice
+check notes for "Docker_final_doc_0730"
 
-inprogress
-docker images
-docker pull 
-docker inspect <imagename>
-docker run <image>
--it ==itereactive terminal & -dt detached terminal
+docker pull <imagename>
+docker images 
+docker rmi <imagename>
 
-docker exec -it <container id> <command>
-docker exec -it <container id > /bin/bash 
+
+
+docker run -it <imageid> ###foreground intereactive terminal 
+docker run -dt <imageid> ##background detached terminal 
+docker run <imageid> ##bydefault -it 
+
+
+use carefully ##
+docker container prune ##this will removed all stopped container 
+docker system prune -a ##this will remove all unwanted data 
+
+
+
+docker run -p <HOST_PORT>:<CONTAINER:PORT> IMAGE_NAME 
 
 ##############################################################################################################################
 6th of Aug 
@@ -1202,4 +1212,14 @@ Docker command ,
 docker port -p & -P ## port binding localhost:dockercontainer
 ngnix installation 
 Docker file 
-##################################
+
+docker run -p <HOST_PORT>:<CONTAINER:PORT> IMAGE_NAME 
+docker run -P IMAGE_NAME #dynamic port alloacation for 
+docker run -dt -p 82:80 nginx  
+or 
+docker run -dt -P ngnix #dynamic port alloacation for 
+########################################################################
+7th Aug 
+DOCKER file
+
+################################
