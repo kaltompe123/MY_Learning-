@@ -1,0 +1,1204 @@
+828040324833 AWS Account ID 
+Kalyan_AWS
+kalynatompe4@gmail.com
+Netcracker#456
+keys MFA :- 914533
+
+
+gitlab 
+https://gitlab.com/dashboard/projects ##kaltompe123/Netcracker#456
+
+##pluralsightt 
+kaltompe1223
+Netcracker 
+*Pradeep Reddy Admin*
+*+91 9133343374 only WhatsApp message*
+crontabguru,
+c
+##############################
+https://drive.google.com/file/d/1BG9v8fRJJn2qHLsBLl1RnWX9UkTPXEbK/view?usp=drive_link
+syllabus for multicloud devops 
+
+##17th April 2025
+for high avaibility & Disaster recovery planning.
+continent > country > region > AZ 
+
+Globally
+33+ regions
+108 AZ
+400+ edge location globally
+
+2 regions in india (Mumbai,hyderbad)
+33+ edge location in india 
+
+
+Edge location :- To reduce latency for accessing application 
+TTL time to leave (for example 2days)  #Cloud Front service (💕😁👍🙌
+devlopers devlope code ,automatically updated over edge location via automation services like AWS lamda .
+
+AWS offers 200+ services 
+############################################################################################################################
+#18-04-25
+Globally 
+33+ regions
+108+ AZ
+400+ edge location 
+INDIA LEVEL
+2 regions in india (Mumbai,hyderbad)
+33+ edge location in india 
+
+VPC :- Virtual private cloud (##To create security for cloud environment ) We can control network configuration .
+MAXIMUM 5 VPC can be created at region level for user . its region level
+Subnet are created under VPC. Maximun 100 subnets per AZ level. its AZ level . Subnet size is depends on VPC size created.
+maximum number of servers can be created depends on .size of subnets at AZ level.  
+VPC >subnet>servers
+
+For very strict high avaibility/DR  VPC can be created in different regions . And subnet/servers in different AZ zones.  
+
+##AWS offers security LEVEL
+VPC >Subnet >server > application level
+
+for examples 2 regions in inida :- ap-south1(mumbai), ap-south2 (hyderabad)
+AZ will be 
+ap-south1(mumbai) --Regions
+ap-south1-a AZ 
+ap-south1-b AZ
+ap-south1-c AZ 
+
+ap-south2 (hyderabad)
+ap-south2-a
+ap-south2-b
+ap-south2-c
+
+############################################################################################################################
+#21-04-2025
+connectivity through internet mean first connection at public server only. 
+Public server has {public ip + private ip (for internal communication fron public to private server)} 
+Private server has only private ips . 
+
+
+VPC (region based) >subnet(AZ based) > servers
+Can we create multiple VPC in one region > Yes  ( max 5 per region)
+Can we create multiple subnets in one AZ > Yes (max 100 per AZ,Depends on  size of VPC ,CIDR)
+
+To achieve  High avaibility (HA) :-
+create server in multiple AZ to achive  (AZ based HA) 
+create server in multiple VPC to achive (region based HA)
+
+AWS account creation process. 
+####################################################################
+##22-04-2025
+AWS keys pair (public & private keys) encryption type (RSA & ED25519 )
+PEM for openssh
+PPK for putty 
+
+public subnet & private subnet 
+public subnet :-connected to internet via internet gateway
+private subnet:- No direct connection to internet 
+##########################################################################################
+23-04-2025
+security groups are created VPC level. & assigned to ec2 instance(server) level. Under SG we can create multiple rules. & attach to ec2 instance. Maximum 60 rules can be created in one SG.
+multiple SG can be created in one VPC level.
+SG has 2 sets (inbound & outbound rules) . 
+#Outbound rule by default its allow all .
+But for inbound rule its restrict to all by default. (we need to create rules for it) .
+SG from one VPC can NOT attach to another instance in different VPC. As its VPC level.
+we can have NACL at subnet level for security (like SG)
+
+###########################################################################################
+24-04-2025
+we can connect to aws server with multiple ways
+Any instance vm (public server) Only accessible when 
+Internet Gateway is connected to subnet (with router) .Then only its accessible(if SG group rules are enabled)
+1> mobaXterm 2>terminal 3>sessions 4>Gitbash 5>VScodes
+
+5 things needed for server connection 
+1> internet 2>public ip 3>key pairs 4>ssh allow 22 at SG 5>username 
+##########################################################################################
+25-04-2025
+create a VPC 
+create IG & connect to VPC.
+public & private subnet .. (anything connected to IG via Route Table is public subnet ) enable public IP 
+create Route Table > add rule destination public subnet & target IG 
+{public server --> private server (bashtion process/jumpp host ) 
+create SG 
+create instance & connect to public server .
+Then connect private server via public server (jump host) using key
+###########################################################################
+26-06-2025
+CIDR:- classless inter domain routing 
+1> IPV4 2> IPV6
+
+These ranges are not routable on the public internet, which makes them safe for internal networking:
+
+Range CIDR Notation IPs Available
+10.0.0.0 10.0.0.0/8 ~16 million
+172.16.0.0 172.16.0.0/12 ~1 million
+192.168.0.0 192.168.0.0/16 ~65,000
+✅ Why They're Always Used in VPCs
+Avoid IP conflicts on the internet
+
+Guaranteed uniqueness within your network
+
+Supported by all networking devices and cloud providers
+
+AWS VPCs let you choose any of these ranges, but 10.x.x.x is most common due to its flexibility (largest range)
+Reserved IPs in Every Subnet (per CIDR block):
+Let’s say your subnet is 10.0.0.0/24:
+
+
+IP Address Purpose
+10.0.0.0 Network address
+10.0.0.1 Reserved for the VPC router
+10.0.0.2 Reserved for DNS server
+10.0.0.3 Reserved for future use
+10.0.0.255 Network broadcast address (not used in AWS, but still reserved)
+So, for a /24 subnet, although 256 IPs are available in theory, only 251 are usable.
+################################################################################################
+28-06-2025
+NAT gateway ( Network address trans Gateway )
+Nat gateway is to provide secure internet connection to private server in private subnet. (for example to download packages ,depedencies etc)
+internet only acccessible from private server end . 
+NAT gateway has static ip ( fixed elastic IP ). where private server reaches to this fixed elastic ip (where it leave request  & bring response with elastic fixed ip )
+NAT gateway remember ip translation to serve server request properly.
+NAT gateway present in public subnet 
+
+Here’s the IP Translation Process (very simply):
+
+Your EC2 (private subnet) has a private IP like 10.0.1.5.
+
+It sends a request to the internet (example: apt-get update → connecting to archive.ubuntu.com).
+
+At the NAT Gateway:
+
+NAT sees the packet from 10.0.1.5.
+
+NAT replaces the source IP (10.0.1.5) with its own Elastic IP (public IP) — e.g., 3.80.120.50.
+
+It remembers this mapping (10.0.1.5 ↔ 3.80.120.50:port).
+
+The packet goes to the internet — from NAT’s public IP (3.80.120.50).
+
+Response from the internet (say from archive.ubuntu.com) comes back to NAT Gateway at 3.80.120.50.
+
+At NAT Gateway:
+
+NAT checks its mapping table.
+
+It knows this reply is meant for 10.0.1.5.
+
+It replaces the destination IP back to 10.0.1.5 and sends the packet into the VPC.
+
+Your EC2 receives the response — it thinks it is directly talking to archive.ubuntu.com.
+
+LB :- Load balancer takes request from public & redirect to target servers
+##################################################################################################################
+29-04-2025
+NAT gateway
+practical :- 
+VPC endpoint is used to connect to AWS services like S3bucket outside VPC.
+its kind of internal connectivity. 
+VPC peering :- only 1-1 VPC connection
+VPC 
+#########################################################
+30-04-25 Z
+Load balancer concepts 
+##Application load balancer , Network Load Balancer , Gateway Load Balancer
+step1> ALB 2 option ( internet facing & internal )(AZ) 
+step2> TG (register instanaces,devices ) ( subnets from selected AZ at step 1 will allow access)
+step3> 
+
+ALB need to select AZ  (atleast 2public subnets different AZs for HA )
+While creating need AZ
+
+Difference between NAT GW & NAT instances:- need to check
+##########################################################################
+1st may off 
+2nd May class
+https://www.youtube.com/watch?v=AI9azFTFx8I   (also use shared ALB notepad notes by veera sir) 
+ALB will create Load Balancer node in each of specified avaibility zone.
+
+
+Load balancer concepts 
+##Application load balancer , Network Load Balancer , Gateway Load Balancer
+step1> ALB 2 option ( internet facing & internal )(AZ) 
+step2> TG (register instanaces,devices ) ( subnets from selected AZ at step 1 will allow access).
+
+An Application Load Balancer (ALB) in AWS is designed to distribute incoming traffic across multiple targets, 
+such as EC2 instances, containers, and IP addresses, across one or more Availability Zones (AZs). 
+Here are some key points regarding ALB and traffic distribution across Availability Zones:
+
+
+Keys points:-
+Traffic Distribution and Availability Zones :-  ALB does not route traffic to unlselected AZ.As there load balancer node in that zone.
+Traffic Distribution: - Within selected AZ ALB will distrubute traffic evenly across registered &  healthy targets in those zone.
+#########################################################################
+#5th-2025
+ALB,TG,html hosting theory
+#################
+6th May #
+ALB,TG,html hosting (practical)
+########################################
+7th May 
+ASG 
+static & dynamic
+challege 1> ASG generated ec2 should be in same subnet which  is available in Load balancer
+challenge 2> it should be in same TG which is assigned to Load balancer
+challenge 3> it should scale server with same application deployment 
+challege 4> it should scale with same configuration 
+it is VPC level service, its assigned to TG 
+#########################################################
+8th  May #
+AMI > image (snapshot) ,web app etc 
+custom template -> AMI + additional configuration (images cpu ram for ex. t2micro ,SG,key )
+practical ASG
+AMI > template creation >ASG creation (using template) #network selection in template will get override in ASG group creation 
+network need to select while creation ASG.(means AZs ,it will create instance accordingly by balacing vms etc) 
+##############################################################
+9th  May #
+practical 
+WEB server > AMI > custom template > TG >ALB >ASG . 
+network need to select while creation ASG.(means AZs ,it will create instance accordingly by balacing vms etc)
+Need to select VPC 
+ASG ## cpu average parameter need to (in dynamic autoscaling  rules) ##it will scale in & scale out accordingly.
+###############################################################
+##10th May 
+Application LB ##traffic limitation , cant handle huge traffic (may face latency ) ( layer 7 ) . ALB support only HTTP/HTTPS protocol.Good for web apps
+Network load balancer ## dont support Path based load balacing . ( layer 4) NLB is IP and port-based routing. TCP /UDP /TLS protocol. Suitable for high-performance workloads
+
+we can create multiple paths under 
+/var/www/html/ for example /var/www/html/path1 /var/www/html/path2 (but health check will be applied to selected path only for example by default it is /var/www/html .
+so if we are using custom path /var/www/html/path1/index.html (health check may conflict ) .So Need to create another TG with custom path for Health check HC  & add to LB.
+
+#We can create combination of NLB & ALB to achieve (path based routing & high performance workload ) for example  flipkart.com #practical pending 
+################################################################
+11th may sunday off
+######################################################
+#12th & 13th May 
+Route 53
+route 53 is aws DNS service port 53.
+3 concepts:- hosted zone, records ,routing policy 
+1> hosted zone (public & private )
+2>record 
+    #A type record (hostname <->public ip ) simple one
+    #Alias type record - (hostname <-> LB) routing via LB 
+	#CName record   - (hostname <->domain <-> subdomain) A CNAME (Canonical Name) record is used in Amazon Route 53 to map one domain name (alias) to another domain name.
+	for example www.example.com → app.example.net
+
+3> routing policy 
+   Simple routing , failover routing ,latency based routing , geolocation routing ,Weighted routing 
+
+#Simple routing :- (basic routing ) sRoutes all traffic to a single endpoint .Single resource (e.g., one EC2 instance or one IP). for example :- www.example.com → 192.0.2.1
+#Failover routing (high avaibility) :- Routes only primary source (region) . On failure switch to secondary source (region) .Active-passive setups (failover to backup if primary fails).Automatically switches traffic to a healthy backup resource.HC are required .
+#latency based routing (Fastest AWS region_):- Route users to the region with lowest latency. route traffic to region where latency is low (latency improvement ) . for example Mumbai based traffic routes to mumbai region instead of US region.Automatically detects the AWS region with the best response time
+for example :- User in Japan → routed to Tokyo region, User in Germany → routed to Frankfurt region
+#gelocation based routing (Country/region based) :-Serve users based on geographic location (continent, country, or state) .Allow /restrict user to access for specific country /continent/state.Routes users from specific regions to regional endpoints.
+for example: irctc site accessible only from india. for example US users → US servers,India users → India servers
+#weighted routing (Split traffic by %) :- Distribute traffic across multiple resources based on weight assigned.Routes a percentage of traffic to each endpoint.
+70% to server-A, 30% to server-B (for canary testing or blue/green deployments)
+
+#use chatgpt for difference /comparision #
+############################################
+domain name ##kntkash.xyz
+##########################################
+#14th may # S3
+Simple Storage Service #S3
+Name should be unique .
+by default maximum 100 buckets per region can be created . Also bydefault s3 bucket has private access .
+s3 is global service (can view any bucket from any region)
+S3bucket is regional service.
+Object oriented bucket. It has versioning feature.It has delete version marker. It need to delete if you want to restore (if any deleted file).
+Consists of the actual data, metadata, and a unique identifier called a key.
+
+DR for files in 2 ways:- 1> versioning 2> replication
+#########################################
+15th May 
+presinged URL used to grant access for an object for limited time .Anyone can access this URL if bucket & objects  are private .
+access time limit maximum time can be 12hours or until your session expires.
+DR :- Replication rules can be created . s3 bucket (from same region or different region ) to destination bucket.
+Versioning to be enabled on both buckets for replication
+
+
+
+1. Replicate specific folder into destination bucket
+2. Replicate existing include ongoing files into destination bucket 
+3. After enable object access into public how to remove public access to specific object
+######################################################################
+16th may
+s3 static website )route 53
+#############
+18th off
+#####################################################################
+19th may 2025 
+s3 classes , cost benefits , invetory,KMS encryption
+bucket lifecycle
+reserved instance ( 1-3 years cost benefits ) 
+###########################################################################################
+20th mayn 2025 
+#Spot instance:-  (cost benefit from shared hw. upto 92% off ) can be deleted at anytime aws .
+can achieve high availblity using  multiple spot instance . or combination (on demand + spot instances)
+depends on use case.
+#
+Dedicated host:- Dedicated hw from AZ. (expensive) . it use c5 & m5 family instance types . 
+even if full resources not utilized , it will cost for entire HW. 
+how to create while regular instance creation process (tenancy :- dedicated) 
+
+#IAM policy ( granular level access managment ) 
+AWS default full access policy related to specific service. Custom policy can be created based on requirement .
+IAM - 1> root 2>console ,CLI 
+#############################################################################################
+21st May
+AWS CLI / IAM policy creation 
+AWS cli comamnd line 
+######################################################
+22nd May 
+IAM policy
+1>AWS manageed policies (can be attached to multiple users)
+2>Custom policy (can be attached to multiple users)
+3>inline policy (specific to user only ) When user is deleted inline policy also deleted automatically
+
+##permission  follow inheritance (dependancy permission should be solved) For example:- user cant delete a bucket without having list bucket permission
+########################################################################
+23rd
+IAM switch role concept 
+from one account to another or same account 
+#######################
+24th 
+IAM ---
+##################################################
+26th May
+DBMS :- 1> strucutred (relational) 2> nonstructered 
+Structered :- mysql ,mariadb , oracle,postgresql ,
+non-Structered :- MONGODB 
+there 2 type of DBs .
+RDS MYSQL port 3306 
+
+1>standalone 2>standby 3>clustered db with 1 db as main & rest 2 as replica (which can provide fault taulrance on failure of main DB)
+Sql queries , create db & and all
+we use tool like MYSQL workbench to connect DB from outside. (same concept like putty) 
+Aurora is AWS database. 
+######################################
+27th May:-
+We can create replica whenever required. 
+MYSQL  provide DB size upto 54TB 
+export snapshot to s3 ( need KMS for it ) 
+##############################
+28th may:- 
+RDS on ec2 
+copy ,upgrade,exports
+########################################################################
+29th May
+prooxy concept for RDS (to manage load & connection management pool). Its reduce load on master database.
+Proxy instance is for master DB.
+
+secrete manager # vault pass store ##pending practice 
+
+Able to connect RDS proxy by using ec2 as jump/bastion host. Not able connect RDS proxy directly as by default proxy has  private network (no public ip).
+#EC2 instance is in the same VPC/subnet as the RDS Proxy:
+RDS Proxy is private by default (no public IP).
+
+It allows inbound access only from within the VPC (or its security group).
+
+❌ Your local machine is outside the VPC:
+It cannot route to the RDS Proxy unless you use a VPN or SSH tunnel.
+
+
+################################################################################
+##30th May##
+VPC peering 
+When only one VPC (same account/different account/same region/different region)  to another VPC (same account/different account/same region/different region)connection is required. 
+(VPC peering is recommended) .Only condition its one to one connection . Not possible one to many.
+VPC  should not overlap IP in between peering vpc. 
++-------------------+                          +-------------------+
+|    VPC-A          |                          |     VPC-B         |
+|  CIDR: 10.0.0.0/16|                          | CIDR: 192.168.0.0/16|
+|                   |                          |                   |
+| +---------------+ |                          | +---------------+ |
+| | EC2 Instance  | |                          | | EC2 Instance  | |
+| | 10.0.1.10     | |                          | | 192.168.1.20  | |
+| +---------------+ |                          | +---------------+ |
+|                   |                          |                   |
+|     Route Table   |                          |    Route Table    |
+| +----------------+|                          | +----------------+|
+| | 192.168.0.0/16 |-------------------------->| | 10.0.0.0/16    | |
+| | via pcx-abc123 |                          | | via pcx-abc123 | |
+| +----------------+                          | +----------------+ |
++-------------------+                          +-------------------+
+             \                                        /
+              \__________ VPC Peering Connection ____/
+                        (e.g., pcx-abc123)
+
+
+##############################################################
+##31st May
+We can connect to s3 using 1> internet gateway (internet) 2>NAT gateway 3> VPC endpoint 
+1st method is via internet & 2nd is little costlier as compared to VPC endpoint .
+#VPC endpoint :-  
+VPC endpoint allow to connnect to AWS services outside VPC securily (within Amazon network) .
+VPC end points are created to connect to AWS services outside VPC with low cost .This ensures that traffic between your VPC and the AWS service does not leave the Amazon network, enhancing security and potentially reducing costs
+
+#NOTE: IAM role need to be attached to ec2. 
+there are 2 Types of enpoint :-
+  1> gateway enpoint 2>interface endpoint  
+
+
+When to Use Each
+Use Gateway Endpoints:
+
+When you need to access Amazon S3 or DynamoDB from within the same VPC and region.
+
+For cost-effective solutions, as there are no additional charges.
+
+When high throughput and low latency are required for S3 or DynamoDB access.
+
+In scenarios where simple configuration and management are preferred.
+
+Use Interface Endpoints:
+
+When accessing AWS services other than S3 and DynamoDB.
+
+If you require fine-grained security controls using security groups.
+
+For cross-VPC, cross-region, or on-premises access to AWS services.
+
+When integrating with AWS PrivateLink-enabled services.
+
+If you need to use private DNS to access services using their standard public DNS names within your VPC.
+
+##NACL 
+| Feature                | NACLs                                                        | Security Groups                                                                   |                                                                                                                                                        |
+| ---------------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Level of Operation** | Subnet level                                                 | Instance level                                                                    |                                                                                                                                                        |
+| **Statefulness**       | Stateless (requires explicit return rules)                   | Stateful (return traffic automatically allowed)                                   |                                                                                                                                                        |
+| **Rule Evaluation**    | Rules evaluated in order by rule number                      | All rules evaluated collectively                                                  |                                                                                                                                                        |
+| **Rule Types**         | Allow and Deny                                               | Allow only                                                                        |                                                                                                                                                        |
+| **Default Behavior**   | Default NACL allows all traffic                              | Default security group denies all inbound traffic and allows all outbound traffic |                                                                                                                                                        |
+| **Association**        | One NACL per subnet; can be associated with multiple subnets | Multiple security groups per instance                                             | ([jaytillu.medium.com][1], [harsh05.medium.com][2], [en.wikipedia.org][3], [docs.aws.amazon.com][4], [jayendrapatil.com][5], [docs.aws.amazon.com][6]) |
+
+###############################################################################################################################################################
+1st june 2025
+ of ##transit gateway
+youtube link:- https://www.youtube.com/watch?v=HDte6jsic0U
+Mastering Centralized Cloud Networking with AWS Transit Gateway | Mr. Veerababu
+
+1> VPC limitaion will be recovered with transit gateway.  1 to many possible 
+ 
+1> transit gateway is region level service,so each region we need to create transit gateway for cross connection (transit peering) .It should be accepted from other region.Mastering Centralized Cloud Networking with AWS Transit Gateway | Mr. Veerababu
+2> We need to have transit gateway attachment 
+3> We need to have VPC/instance related route tables with viceversa.
+
+
+#################################################################################################################################################
+2nd June:-
+lamda function :- boto3 automation /function provision 
+##pycharm tool for python code .
+python <boto3> aws    
+pip install boto3
+AWS Lambda is a serverless compute service that lets you run code without provisioning or managing servers. You just upload your code, and AWS runs it only when needed, automatically scaling and charging you only for the time your code runs.
+
+15minutes max excuttion time limit 
+| Feature                 | Description                                                             |
+| ----------------------- | ----------------------------------------------------------------------- |
+| 🚫 No servers to manage | You don’t need to launch EC2 or manage infrastructure                   |
+| 📦 Pay only for use     | Billed by **number of invocations** and **execution time**              |
+| ⚙️ Auto scaling         | Lambda automatically handles multiple requests simultaneously           |
+| ⏰ Trigger-based         | Can run code based on **events** (e.g. S3 upload, EC2 status, schedule) |
+| 🧠 Language support     | Supports Python, Node.js, Java, Go, .NET, Ruby, and custom runtimes     |
+
+
+###########################################################################
+3rd June # 
+
+I first deployed a Flask application running on port 3000, which is the default development port for Flask. Once the application was up and running, I configured an Apache HTTP Server (httpd) as a reverse proxy.
+
+The purpose of using the httpd proxy was to expose the Flask application on standard HTTP port 80, allowing users to access it without needing to specify port 3000 in the URL.
+
+SSL termination for secure HTTPS access,
+Improved performance by offloading static file handling,
+Centralized logging and monitoring support,
+Scalability through support for load balancing and multiple app routing.
+
+I deployed my Node.js application to an EC2 instance by first installing Node.js and cloning my project. I used npm install to install dependencies. Then I installed PM2 to run the application in the background using pm2 start app.js. PM2 ensures the app stays up, restarts if it fails, and can be configured to start on boot.
+
+To make the application accessible over standard HTTP (port 80),  Apache HTyou can configure TP Server (httpd) as a reverse proxy. This forwards external traffic from port 80 to the Node.js application running on its internal port (e.g., 3000). This setup improves user accessibility and integrates better with web standards and firewalls.
+
+Overall, this configuration allows me to manage the Node.js app efficiently in production, ensuring it is always available and publicly accessible through a standard web URL.
+
+git clone https://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@github.com/CloudTechDevOps/docker_python_flask-project.git
+git clone https://github.com/CloudTechDevOps/sample_nodejs_on_Ec2
+####################################################################################################################################################
+cloud53375@gmail.com
+
+https://www.pluralsight.com/buy?sku=CL-Y-PLUS&promo=25DRIFTSUPP60OFFYRLYCL
+
+
+#######################################################################################################
+5th of june:- 
+project 3tier
+########################################################################
+10th june ## cloud watch /monitoring 
+log collector:- splunk,cloudwatch etc
+metric:- grafana promotheus 
+userdata -indivisual scrips for instance .(ex. yum install httpd) 
+#note :- it is just for first boot only /launch of instance
+##################################################################
+11th June 2025
+Lambda function:
+Need to attach roles.
+1> Manual 2>Event based 3> schedule ( covers specific services).
+
+#Event brighed service. (covers all services )
+#########################################################################################################################
+12th june#
+lamda to RDS connection 
+Document "Lambda to connect to an RDS"
+1> create lamba function & create a role attach to it (lamda to RDS). Also you need to create pymysql depencies by installation it in ec2 ,zip then need to export s3. Then create layers for solving  depedecies.
+Export to s3 also required a role . ec2tos3 exports
+2> create private DB. (either use envirment variable in lamda configuration or create secrete manager)
+3> you need to select VPC option  (if DB is private) in lamda configuration.(restrication)
+4> if secrete manager are created you (it will be out of vpc) .So you need to create vpc endpoint for secrete manager to access secretes.
+
+if any confusion use document & chatgpt. 
+###########################################################################################################################
+13th  june
+##ec2 cloudwatchlogs & export to s3 using lamda rules .
+Document "CloudWatch LOGS AND EXPORT O S3"
+Need roles 1>ec2 to cloudwatch 2>lamda to s3 3>rules (event bridge rules) (autocreate ) lamda to execute
+#######################################################################
+#16th June
+Able to connect RDS using lamda + API gateway 
+##automation task to create AMI using lambda & event bridge rule (condition instance stopped /delete) ## no
+text file:- "lambda rds api gateway-connnection"
+##########################################################################
+17th of june
+certificate manager/ HTTPS
+
+1> create ec2 instance ,install httpd ,start it, enable.
+2> create TG & ALB 
+3> create certificate manager , request certificate , give route53 fqdn,Add record in route53 for ALB.
+4> check lister, update/add listener with HTTPS & certificate .
+5> Now it should work with 
+
+##grafana promotheus
+Document "Multiple servers in 1 dashboard" & "grafana on ec2"
+"grafna-prometheus installation-updated"
+###############################################################
+18th June
+API Gateway ->lamda -->backend (Dynamo DB)
+Document "Lambda-api-dynamodb-project"
+Search for folder "project-api-lambda-dynamodbintigration"
+Cloudcloudtrail ;- auditing every activity ,event .
+cloudwatch:- metrics & all
+
+Security videos #3 youtube videos 
+################################################################
+19th june#
+create static index.html s3 webhosting,sample
+cloudfront ,invalidation (TTL) ,Invalidation means it will push for changes to reflect from (cloud front) . TTL 
+https://github.com/CloudTechDevOps/lambda-/blob/main/cloudfront_invalidations.py
+#####################################################################
+20th June :-
+Elastic cache 
+Amazon ElastiCache is a fully managed in-memory data store and cache service provided by AWS. It is primarily used to improve the performance of applications by retrieving data from high-throughput, low-latency in-memory systems, instead of relying entirely on slower disk-based databases.
+
+document
+"rds-cache"
+################################################################
+23rd June 2025
+##aws all services architecture 
+& Splunk installation (monotoring) 
+
+Practical pending .
+doc "SPLUNK LOGS"
+###############################################################
+24th Devopps Introduction
+syllabus 
+###############################################################
+25th 
+git intro & 
+working directory>staging>local>remote
+#############################################################
+26th june 
+git merge 
+git commit ,
+2 devloper not in sync, different commits 
+#################################################################################################
+27th June
+
+git token method 
+git push https://<token>@github.com:/user/repository.git
+settings-->Developer settings-->personal access token -->Token classic --> generate token (classic )
+
+git push https://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@github.com:/kaltompe123/Testing_Repo.git 
+git remote add orgin https://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@github.com:/kaltompe123/Testing_Repo.git 
+
+git pull methods:- 
+
+git pull fast forward - no divergenc & it will pull updates from remote branch directly
+git pull --no-rebase  ## its like merge ( it will create extra commit id for merge) 
+git pull --rebase   ## it will not create extra commit for pull . But recent commit will be renamed 
+##################################################################################################
+30th June
+git checkout <>
+git checkout main 
+git checkout -b dev             : to create and switch from one branch to another.
+#######################################################################
+1st of July 
+branch<-> Pull request--> approver (Merge)
+Pull request <-> Approver <-> Merge 
+only changes will go in merge even if we missed to pull changes from  branch 
+
+git same branch same file different line   ###git merge ,git pull --rebase,--no-rebase
+git same branch same file same  line ###resolve conflicts 
+git different branch same file different line ##
+git different branch same file same  line ###resolve conflicts 
+
+git-ignore 
+Create .gitignore
+
+
+
+###########################################################################
+2ndof july 
+
+git restore ## undo changes in working directory
+git restore --staged <filename> ##unstage file mean move backto working directory.
+git restore ##to remove changes ,
+
+git reset HEAD~1 ### mixed it will move to local directory to unstage area/working directory. 
+git reset --soft HEAD~1 ##it will be move to staging area but additional git restore --staged <filename> required if you want to move back to working directory.
+git reset --hard HEAD~1 ##it will completely remove changes & also remove file from working directory.
+
+(HEAD ->main origin/main, origin/HEAD)
+HEAD ->main ##--represents local 
+origin/main ##-Represent  main branch
+origin/HEAD ##respesents  main BRANCH latest commit
+
+if HEAD ->main && origin/HEAD are same . it means you are up to date with  remote repository
+
+
+
+git revert <commit id>  ### will revert to specific id. it will create one extra commit 
+
+git checkout main
+git merge dev   ### merge will push all ids.
+
+git checkout main 
+git cherry-pick <commit-id>   ##will push specific id 
+########################################################
+3rd of july 
+git stash
+git fetch
+git pull = fetch + merge
+overview of all git classes
+###################################################################
+4th July Gitlab
+
+99.99 same only diffeerence is Instead of PR (pull request) in gitlab MR (Merge Request).
+Rest everything is same.8.15am
+
+##Teraform:-
+Intro ,Opnesource earlier aquired by IBM :- 
+opensource opentofu
+terraform init 
+terraform plan 
+terraform apply 
+
+use "-auto-approve" ##to proceed with autoapproval approval 
+##########################################################
+7th July 
+Terraform introduction 
+provider.tf, main.tf
+license
+#########################################################
+8th july
+Important config files in terraform. 
+main.tf ---> Main config resource provision file.
+provider.tf --> Details of provider like aws/azure. Required provider version for ex. version = "6.11.0"
+variable.tf -->>variable defined here .Main.tf takes variable details from variable.tf here.
+terraform.tfvars -->> values provided here as argument. Easy to edit & understand . variable.tf takes details from terraform.tfvars if not explicitlty mentioned in main.tf.
+Note: Value mentioned in terraform.tfvars overwrites values in variable.tf . Values in file terraform.tfvars has more precedence over variable.tf...##Note:-if values hardcoded at main.tf has more precedence.
+##Below flow 
+terraform.tfvars(update values at variable.tf)------> variable.tf(updates values at main.tf)-------> main.tf 
+instance_type = "t2.nano" ---> variable "instance_type" -->variable "instance_type" ---> instance_type = var.instance_type   
+
+output.tf --> To get output for specific values. For example to get private ip id specific instance.
+syntax
+
+#main.tf syntax 
+resource "aws_instance" "VM1" {
+  instance_type = var.instance_type
+  ami = var.ami_id
+}
+
+#variable.tf syntax
+variable "ami_id" {
+type = string
+default = ""
+}
+
+#terraform.tfvars syntax 
+ami_id  = "ami-00ca32bbc84273381"
+instance_type = "t2.micro"
+
+#output.tf syntax
+output "ip" {
+value = aws_instance.VM1.public_ip
+}
+############
+Different tfvars files. 
+Bydefualt is terraform.tfvars
+if any other files (for ex. test.tfvars) need to provide syntax as below 
+
+terraform plan -var-file="test.tfvars"
+terraform plan -var="instance_type=t2.nano"
+
+###############################################################################################
+9th July 
+state file:- 
+
+fop changing instance.type it will reboot instance  . for example 
+
+teraform + aws behaviour 
+| **Attribute**                            | **In-place Update (No Recreate)**               | **Forces Recreation (Destroy + Create New)**                  |
+| ---------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------- |
+| `tags`                                   | ✅ Can update tags anytime                       | —                                                             |
+| `user_data`                              | ✅ Updates metadata (may need reboot)            | —                                                             |
+| `volume_tags`                            | ✅ In-place                                      | —                                                             |
+| `disable_api_termination`                | ✅ In-place                                      | —                                                             |
+| `monitoring`                             | ✅ Enable/disable detailed monitoring            | —                                                             |
+| `ebs_optimized`                          | ✅ Sometimes in-place (depends on instance type) | —                                                             |
+| `iam_instance_profile`                   | ✅ Attach/detach in-place                        | —                                                             |
+| `credit_specification`                   | ✅ Update burstable credit option                | —                                                             |
+| `ami`                                    | —                                               | ❌ Requires new instance                                       |
+| `instance_type`                          | —                                               | ❌ Must recreate with new type                                 |
+| `subnet_id`                              | —                                               | ❌ Moving to another subnet requires new instance              |
+| `availability_zone`                      | —                                               | ❌ Must recreate in new AZ                                     |
+| `key_name`                               | —                                               | ❌ New SSH key pair requires replacement                       |
+| `placement_group`                        | —                                               | ❌ Changing placement group requires recreation                |
+| `tenancy`                                | —                                               | ❌ Changing tenancy (default ↔ dedicated) requires recreation  |
+| `host_id`                                | —                                               | ❌ Bound to dedicated host → must recreate                     |
+| `root_block_device` / `ebs_block_device` | ⚠️ Some changes (tags, size) may be in-place    | ❌ Some changes (volume type, encryption) can force recreation |
+
+############################################################################
+10th july 
+##backend.tf s3:- 
+common statefile over s3.
+
+terraform {
+#required_version = ">=1.10" # this will allow to work same terraform version only 
+  backend "s3" {
+    bucket = "nareshitveeradevops"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+    use_lockfile = true #supports latest version >=1.10
+    #dynamodb_table = "kalyan"
+    #encrypt = true
+  }
+}
+
+& create dynamobd with partion key "LockID" & table kalyan
+################################################################################
+##11th July 
+Coding custom network 
+& nat gateway
+###############################################################################
+14th of July
+RDS through terraform 
+###############################################################################
+15th july 
+date source rds 
+8.30am
+
+#terraform fmt ##format 
+Check git repo
+################################################################################
+July 16th 
+modules -basics
+module {
+source = <source path /any git/local/official terraform registry>
+##rest all regular functanility 
+}
+###############################################################################
+July 17th 
+root-child module
+              ┌──────────────────────┐
+              │      Root Module     │
+              │  (main.tf, vars.tf)  │
+              └─────────┬────────────┘
+                        │
+                        │ calls module with "source"
+                        │ passes variables (input)
+                        ▼
+              ┌──────────────────────┐
+              │     Child Module     │
+              │ (rds/main.tf, etc.)  │
+              └─────────┬────────────┘
+                        │
+                defines resources
+              (aws_db_instance, etc.)
+                        │
+                        ▼
+              ┌──────────────────────┐
+              │    AWS Resources     │
+              │ (RDS, VPC, Subnets)  │
+              └──────────────────────┘
+			  
+			  
+                   ┌───────────────────────────┐
+                   │        Root Module        │
+                   │ (main.tf, variables.tf)   │
+                   └─────────────┬─────────────┘
+                                 │
+         ┌───────────────────────┼────────────────────────┐
+         │                       │                        │
+         ▼                       ▼                        ▼
+ ┌─────────────────┐     ┌─────────────────┐      ┌─────────────────┐
+ │  Child Module    │     │  Child Module    │      │  Child Module    │
+ │      VPC         │     │      EC2         │      │      RDS         │
+ │ (modules/vpc/)   │     │ (modules/ec2/)   │      │ (modules/rds/)   │
+ └─────────┬────────┘     └─────────┬────────┘      └─────────┬────────┘
+           │                        │                         │
+           ▼                        ▼                         ▼
+ ┌─────────────────┐     ┌─────────────────┐      ┌─────────────────────────┐
+ │ AWS VPC          │     │ AWS EC2         │      │ AWS RDS + Subnet Group  │
+ │ Subnets, IGW,    │     │ Instances, SGs  │      │ MySQL/PGSQL instance,   │
+ │ Route Tables etc │     │ Key pairs       │      │ Subnets, Security Group │
+ └─────────────────┘     └─────────────────┘      └─────────────────────────┘
+
+life cycle rules
+lifecycle {
+  ignore_changes = [ tags, ]
+  #create_before_destroy = true 
+  #prevent_destroy = true 
+}
+
+##################################################################################################################
+##July 18
+multiple sg rules same CIDR & diff CIDR.
+for loop 
+fop_each for dynamic rules 
+userdata
+workspace
+#######################################################################################################
+21st July 
+count & for_each
+#     tags = {
+#       Name = "dev-${count.index}"
+#     }
+
+for each
+variable "env" {
+  type = list(string)
+  default = ["dev" , "prod"]
+}
+for_each = toset(var.env)
+    #count =length(var.env)   if it is count 
+    tags = {
+      Name = each.value
+    }
+
+
+import
+#terraform import aws_instance.name i-099d74c66547e88
+
+target resource 
+# terraform plan --target=aws_instance.name
+
+root/child (test-dev-prod env)
+###################################################################
+July 22
+
+provisoners are not tracked by terraform hence we use null resources for it .
+
+file local remote 
+ 
+ null resource #
+#Solution-2 to Re-Run the Provisioner
+#Use terraform taint to manually mark the resource for recreation:
+# terraform taint aws_instance.server     #terraform taint & untaint
+# terraform apply
+
+#terraform taint 
+#However — ⚠️ it’s now deprecated and replaced by the terraform apply -replace syntax.
+
+################################################################
+23rd july 
+8am
+terrgrunt 
+opentofu 
+condition 
+project
+git clone https://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@github.com/CloudTechDevOps/2nd10WeeksofCloudOps-main.git
+git clone https://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@github.com/CloudTechDevOps/fullstack-authors-books-application.git
+git clone https://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@github.com/CloudTechDevOps/fullstack-employee-application.gitgit clone https://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@github.com/CloudTechDevOps/3-tier-app-infra.git
+############################################################################################################################################################### 
+########################################################################################################################################### 
+24th July
+project using terraform
+Other projects pending 
+#############################
+25th july 
+Jenkin introduction & basics ,
+installation (sample executation ) 
+
+default port 8080 . 
+default path /var/lib/jenkins/workspace
+both can be customised 
+#####################################################################################
+26th class (jenkins - day2)
+
+
+
+#dynanic calling apply/destoy 
+#GUI :-This project is parameterized -->>choice parameter 
+
+caling from SCM (source code manager)
+mean calling source code from git
+
+---------------------------------------------
+pipeline {
+    agent any
+
+environment {
+    TF_DIR = "day-2"
+}
+    parameters {
+        choice(
+            name: 'ACTION',
+            choices: ['apply', 'destroy'],
+            description: 'Select Terraform action for final stage'
+        )
+    }
+
+    stages {
+
+       # stage('checkout') {
+       #    steps {
+       #         git branch: 'main', url: 'https://github.com/kaltompe123/TerraformMyRepo.git'
+       #    }
+       # }   ##this is not required as we are calling from git jenkin file from git itself.
+
+        stage('init') {
+            steps {
+                dir("${env.TF_DIR}") {
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('plan') {
+            steps {
+                dir("${env.TF_DIR}") {
+                    sh 'terraform plan'
+                }
+            }
+        }
+
+        stage('apply/destroy') {
+            steps {
+                dir("${env.TF_DIR}") {
+                    sh "terraform ${ACTION} -auto-approve"
+                }
+            }
+        }
+    }
+}
+---------------------------------------------------------------------------
+Scripted pipeline example. 
+Only Difference from regular pipeline## stages,steps,environment,steps are not required . node instead pipeline 
+
+node {
+      stage('Preparation') { 
+  }
+    stage('Build') {
+     }
+    stage('Results') {
+}
+}
+
+for example.
+
+node {
+   
+    env.TF_DIR = "day-2"   
+
+    stage('checkout') { // for display purposes
+      git branch: 'main', url: 'https://github.com/kaltompe123/TerraformMyRepo.git'  
+    }
+    
+    stage('init') {
+      dir("${env.TF_DIR}") {
+        sh 'terraform init'
+    }
+}
+ 
+    stage('plan') {
+       dir("${env.TF_DIR}") {
+        sh 'terraform plan'
+    }       
+    }
+  
+     stage('apply/destory ') {
+       dir("${env.TF_DIR}") {
+        sh 'terraform  ${ACTION} -auto-approve'
+    }       
+    }   
+ 
+    
+}
+----------------------------------------------------------------------------
+Difference between regular (declarative) & scripted pipeline
+| Feature                | Declarative (Regular) | Scripted               |
+| ---------------------- | --------------------- | ---------------------- |
+| Ease of use            | ⭐⭐⭐⭐⭐                 | ⭐⭐⭐                    |
+| Flexibility            | ⭐⭐⭐                   | ⭐⭐⭐⭐⭐                  |
+| Syntax                 | Structured            | Groovy code            |
+| Validation             | Strong                | Very little            |
+| Good for CI/CD         | Yes                   | Yes, but complex cases |
+| Good for dynamic logic | No                    | Yes                    |
+
+
+##############################################################################################
+28 july 
+
+Jenkin triggers 
+1> Build after other projects are built
+2> Build periodically
+3> GitHub hook trigger for GITScm polling
+4>Poll SCM
+
+3>>GitHub hook trigger for GITScm polling::-
+GitHub Webhook Settings
+In GitHub → Repo Settings → Webhooks:
+
+Payload URL:
+http://<jenkins>/github-webhook/
+
+Content type:
+application/json
+
+Events:
+Select “Just the push event” (or more if required)
+http://100.26.47.241:8080/github-webhook/
+
+4>>Poll SCM
+combination of "Build after other projects are built" + "GitHub hook trigger for GITScm polling"
+
+
+##############################################
+29th july 
+user management
+jenkins master/slave
+##############################
+30th july
+maven goals
+############## life cycles ###################
+clean ------project will be cleaned unnessary files 
+validate - validate the project is correct and all necessary information is available or not
+compile - compile the source code of the project (which converst .java to .class in target foolder)
+test - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
+package - take the compiled code and package it in its distributable format, such as a JAR.
+install - install the package into the local repository(.m2) jar will fill generate into target folder 
+deploy - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.
+
+each process start from scratch for ex- if we start with test directly it will perform clean,validate,compile in sequence first 
+practice pending
+#########################################################
+31st ##tomcat
+practice pending #practice Done
+
+project 
+git@github.com:kaltompe123/project-1-maven-jenkins-CICD-docker-eks-.git
+#######################################################################################
+1st Aug
+Sonarqube #check notepad doc "sonarqube_finaldocV10900"
+rules,quality gates ##make default  
+quality gates #(overall code ) 
+*jenkin action pending ###
+gitlab session pending 
+#######################################################################################
+2nd of Aug 
+Resume prepartion 
+########################################################################################################################
+Practice for gitlab cicd
+IMPORTANT NOTE:_
+  AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"       # Hardcoded Access Key
+  AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"  # Hardcoded Secret Key
+
+🔥 Why It Fails
+
+In GitLab:
+
+CI/CD variables are automatically injected into the job environment.
+
+You do NOT need to re-declare them in .gitlab-ci.yml.
+
+By redefining them like this, you're overriding them with empty values.
+##Always mention them gitlabCI variables
+--------------------------------------------------------------------
+##for private TOMCAT_SSH_KEY ##variable should be saved as File in Gitlab CI variable 
+Also it should be directly copied from ec2-user or where ever generating it. else it may consider it as normal file not PEM file (PEM RSA private key)
+
+you can test it with $ ls -l "$TOMCAT_SSH_KEY" or with file command 
+
+$ file "$TOMCAT_SSH_KEY"
+/builds/kaltompe123/project-1-maven-jenkins-CICD-docker-eks-gitlab.tmp/TOMCAT_SSH_KEY: PEM RSA private key
+
+it should be "PEM RSA private key"
+
+$ ls -l "$TOMCAT_SSH_KEY"
+-r-------- 1 root root 3242 Feb 23 12:11 /builds/kaltompe123/project-1-maven-jenkins-CICD-docker-eks-gitlab.tmp/TOMCAT_SSH_KEY
+
+Also  should be mentioned in qualitygate.wait=true to get wait result for sonarqube analysis 
+#mvn sonar:sonar -Dsonar.projectKey=project-1 -Dsonar.host.url=http://100.26.110.104:9000 -Dsonar.login=778b47f8d1b5c40b62e2363f59ac3d614780c223 qualitygate.wait=true
+
+
+
+                   .github/workflows/main.yml
+
+| Feature                | GitHub                      | GitLab                |
+| ---------------------- | --------------------------- | --------------------- |
+| CI/CD                  | GitHub Actions              | Built-in              |
+| Container Registry     | Available                   | Built-in              |
+| Security Scanning      | Add-ons                     | Built-in (SAST, DAST) |
+| Kubernetes Integration | Good                        | Very strong           |
+| Issue Tracking         | Good                        | Advanced              |
+| Self-hosted option     | Limited (GitHub Enterprise) | Strong                |
+| yml path               | .github/workflows/main.yml  | .gitlab-ci.yml        |
+#############################################################################################################################
+4th Aug 
+###DOCKER##
+Containerization light weight form virtulization that allow you to package & run application in isolated environment called container.
+
+
+these container are controlled by kubernates/openshift .
+if these containers controlled by kubernates ,these container called as POD in term of kubernates.
+Else its simple container .
+
+base image downloaded from docker hub .
+depencies & code can be deployed using docker file (similar like userdata in aws concept)  >> called docker image (similar like custom AMI )
+
+In Containerization only harwdware is shared . Os are isolated.
+
+
+##############################################################################################################################
+5th Aug 
+practice
+
+inprogress
+docker images
+docker pull 
+docker inspect <imagename>
+docker run <image>
+-it ==itereactive terminal & -dt detached terminal
+
+docker exec -it <container id> <command>
+docker exec -it <container id > /bin/bash 
+
+##############################################################################################################################
+6th of Aug 
+Docker command ,
+docker port -p & -P ## port binding localhost:dockercontainer
+ngnix installation 
+Docker file 
